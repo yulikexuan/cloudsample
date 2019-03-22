@@ -1,7 +1,7 @@
-//: guru.springframework.brewery.bootstrap.DefaultLoader.java
+//: com.yulikexuan.cloudlab.sample.bootstrap.DefaultLoader.java
 
 
-package guru.springframework.brewery.bootstrap;
+package com.yulikexuan.cloudlab.sample.bootstrap;
 
 
 import org.springframework.boot.CommandLineRunner;
