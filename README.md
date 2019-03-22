@@ -1,4 +1,4 @@
-
+[![CircleCI](https://circleci.com/gh/yulikexuan/cloudsample.svg?style=svg)](https://circleci.com/gh/yulikexuan/cloudsample)
 
 # Testing Spring Boot B2G - SFG Brewery
 
