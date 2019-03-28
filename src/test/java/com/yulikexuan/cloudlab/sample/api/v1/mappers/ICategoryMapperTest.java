@@ -31,9 +31,7 @@ class ICategoryMapperTest {
         this.random = new Random(System.currentTimeMillis());
         this.id = this.random.nextInt(10);
         this.name = UUID.randomUUID().toString();
-        this.category = new Category();
-        this.category.setId(this.id);
-        this.category.setName(this.name);
+        this.category = Category.builder().id(this.id).name(this.name).build();
         this.categoryMapper = ICategoryMapper.INSTANCE;
     }
 
