@@ -4,13 +4,10 @@
 package com.yulikexuan.cloudlab.sample.api.v1.model;
 
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Book {
 
