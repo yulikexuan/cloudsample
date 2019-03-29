@@ -29,7 +29,7 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public CategoryListDTO getallCatetories() {
+    public CategoryListDTO getAllCategories() {
         List<Category> categories = this.categoryService.getAllCategories();
         return CategoryListDTO.mapCategoryListToCategoryListDTO(categories);
     }
