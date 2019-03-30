@@ -105,7 +105,7 @@ class ICategoryMapperTest {
                 .as("The name of the category should be %s", this.name)
                 .isEqualTo(this.name);
         assertThat(dateTimeFormatter.format(category.getCreatedDate().toLocalDateTime()))
-                .as("The name of the category should be %s",
+                .as("The created time of the category should be %s",
                         expectedDateTimeMessage)
                 .isEqualTo(expectedDateTimeMessage);
     }

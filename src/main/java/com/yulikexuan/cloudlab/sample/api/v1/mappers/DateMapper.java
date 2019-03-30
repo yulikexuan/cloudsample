@@ -11,6 +11,8 @@ import java.util.Optional;
 
 public class DateMapper {
 
+    static final ZoneOffset ZONE_OFFSET = ZoneOffset.from(OffsetDateTime.now());
+
     public OffsetDateTime timestampToOffsetDateTime(Timestamp timestamp) {
 
         return Optional.ofNullable(timestamp)
@@ -23,7 +25,7 @@ public class DateMapper {
                             ldt.getMinute(),
                             ldt.getSecond(),
                             ldt.getNano(),
-                            OffsetDateTime.now().getOffset());})
+                            ZONE_OFFSET);})
                 .orElse(null);
     }
 
@@ -31,7 +33,8 @@ public class DateMapper {
 
         return Optional.ofNullable(offsetDateTime)
                 .map(offsetDateTime1 -> Timestamp.valueOf(offsetDateTime
-                        .atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime()))
+                        .atZoneSameInstant(ZONE_OFFSET)
+                        .toLocalDateTime()))
                 .orElse(null);
     }
 

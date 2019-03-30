@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.sql.Timestamp;
@@ -103,13 +104,19 @@ class CategoryControllerTest {
                 this.category.getCreatedDate());
 
         // When
-        this.mockMvc.perform(get("/api/v1/categories/" + this.name)
+        MvcResult mvcResult = this.mockMvc.perform(
+                        get("/api/v1/categories/" + this.name)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is((int)this.id)))
                 .andExpect(jsonPath("$.createDate",
-                        is(dateTimeFormatter.format(createdDateDTO))));
+                        is(dateTimeFormatter.format(createdDateDTO))))
+                .andReturn();
+
+        // Then
+        System.out.printf("%n>>>>>>> The response is: %n    '%s'%n",
+                mvcResult.getResponse().getContentAsString());
     }
 
 
