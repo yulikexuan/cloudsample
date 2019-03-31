@@ -4,6 +4,8 @@
 package com.yulikexuan.cloudlab.sample.api.v1.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICategoryMapper;
 import com.yulikexuan.cloudlab.sample.domain.model.Category;
 import lombok.AllArgsConstructor;
@@ -15,10 +17,14 @@ import java.util.stream.Collectors;
 
 
 @Data
-@AllArgsConstructor
 public class CategoryListDTO {
 
     private List<CategoryDTO> categories;
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public CategoryListDTO(@JsonProperty("categories") List<CategoryDTO> categories) {
+        this.categories = categories;
+    }
 
     public static CategoryListDTO mapCategoryListToCategoryListDTO(
             List<Category> categories) {

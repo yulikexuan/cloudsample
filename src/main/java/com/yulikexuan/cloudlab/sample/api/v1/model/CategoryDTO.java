@@ -9,12 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
 
 
 @Data
 @NoArgsConstructor
+@ToString
 public class CategoryDTO {
 
     @JsonProperty("id")
