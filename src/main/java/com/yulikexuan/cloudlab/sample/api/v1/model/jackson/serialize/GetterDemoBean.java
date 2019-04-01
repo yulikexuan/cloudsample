@@ -18,6 +18,10 @@ public class GetterDemoBean {
     private String personName = "James Clark";
 
     /**
+     * JsonGetter annotation can be only for methods
+     * JsonProperty can be for fields, getters and setters
+     * Prefer JsonProperty always
+     *
      * Marker annotation that can be used to define a non-static, no-argument
      * value-returning (non-void) method to be used as a "getter" for a logical
      * property.
