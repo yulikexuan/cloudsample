@@ -1,7 +1,7 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.RawValueDemoBean.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.RawValueDemoBean.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.annotation.JsonRawValue;

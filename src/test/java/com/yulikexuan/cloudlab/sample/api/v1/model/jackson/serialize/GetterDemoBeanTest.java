@@ -1,7 +1,7 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.GetterDemoBeanTest.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.GetterDemoBeanTest.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,13 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
+import com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.GetterDemoBean;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 class GetterDemoBeanTest {

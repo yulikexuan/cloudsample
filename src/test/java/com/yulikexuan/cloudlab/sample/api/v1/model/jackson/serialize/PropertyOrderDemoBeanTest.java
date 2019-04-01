@@ -1,18 +1,18 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.PropertyOrderDemoBeanTest.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.PropertyOrderDemoBeanTest.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.PropertyOrderDemoBean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 class PropertyOrderDemoBeanTest {

@@ -1,7 +1,7 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.GetterDemoBean.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.GetterDemoBean.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.annotation.JsonGetter;

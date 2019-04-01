@@ -1,7 +1,7 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.AnyGetterDemoBean.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.AnyGetterDemoBean.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;

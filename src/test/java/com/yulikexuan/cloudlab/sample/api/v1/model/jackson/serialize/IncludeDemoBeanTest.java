@@ -1,11 +1,12 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.IncludeDemoBeanTest.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.IncludeDemoBeanTest.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.IncludeDemoBean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

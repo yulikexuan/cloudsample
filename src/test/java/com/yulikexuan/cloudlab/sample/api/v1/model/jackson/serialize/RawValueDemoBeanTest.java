@@ -1,14 +1,13 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.RawValueDemoBeanTest.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.RawValueDemoBeanTest.java
 
 
-package com.yulikexuan.cloudlab.sample.api.v1.model.jackson;
+package com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.model.jackson.serialize.RawValueDemoBean;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 class RawValueDemoBeanTest {
