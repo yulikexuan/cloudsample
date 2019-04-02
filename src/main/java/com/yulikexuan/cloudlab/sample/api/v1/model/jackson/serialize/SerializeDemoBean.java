@@ -29,7 +29,7 @@ public class SerializeDemoBean {
     @JsonSerialize(using = CustomDateSerializer.class)
     @Builder.Default public OffsetDateTime activeDate = OffsetDateTime.now();
 
-    static class CustomDateSerializer extends StdSerializer<OffsetDateTime> {
+    public static class CustomDateSerializer extends StdSerializer<OffsetDateTime> {
 
         private static final DateTimeFormatter dateTimeFormatter =
                 DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");

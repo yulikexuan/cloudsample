@@ -28,6 +28,7 @@ class SerializeDemoBeanTest {
         this.bean = SerializeDemoBean.builder().build();
         this.objectMapper = new ObjectMapper();
         this.json = this.objectMapper.writeValueAsString(this.bean);
+        System.out.println(this.json);
         this.documentContext = JsonPath.parse(this.json);
     }
 
