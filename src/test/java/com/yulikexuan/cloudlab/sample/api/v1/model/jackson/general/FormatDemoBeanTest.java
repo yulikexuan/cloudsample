@@ -57,6 +57,8 @@ class FormatDemoBeanTest {
                 .isEqualTo(expectedActiveDateJson);
     }
 
+//    NOT WORKS for deserialization
+//
 //    @DisplayName("Able to deserialize date with Json Format Annotation - ")
 //    @Test
 //    void testJsonFormatForDeserializing() throws IOException {

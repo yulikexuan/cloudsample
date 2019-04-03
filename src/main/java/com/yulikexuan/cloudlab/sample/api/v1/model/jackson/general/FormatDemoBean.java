@@ -31,6 +31,7 @@ public class FormatDemoBean {
     @JsonProperty("ActiveDate")
     /*
      * "objectMapper.registerModule(new JavaTimeModule());" is needed
+     * Also, not works for deserialization
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd'T'hh:mm:ssZ")
