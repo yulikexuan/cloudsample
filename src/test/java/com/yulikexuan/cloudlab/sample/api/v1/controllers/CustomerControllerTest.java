@@ -4,6 +4,8 @@
 package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
+import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerListToCustomerListDtoMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +33,12 @@ class CustomerControllerTest {
 
     @Mock
     private ICustomerService customerService;
+
+    @Mock
+    private ICustomerMapper customerMapper;
+
+    @Mock
+    private ICustomerListToCustomerListDtoMapper customerListMapper;
 
     @InjectMocks
     private CustomerController customerController;
