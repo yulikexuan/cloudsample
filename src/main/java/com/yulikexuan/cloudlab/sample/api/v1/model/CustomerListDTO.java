@@ -10,6 +10,7 @@ import java.util.List;
 
 
 @Data
+@ToString
 @NoArgsConstructor
 @Builder @AllArgsConstructor
 public class CustomerListDTO {
