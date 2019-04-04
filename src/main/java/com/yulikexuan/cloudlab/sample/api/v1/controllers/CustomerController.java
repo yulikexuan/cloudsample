@@ -4,7 +4,7 @@
 package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
-import com.yulikexuan.cloudlab.sample.api.v1.mappers.CustomerMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
@@ -31,12 +31,7 @@ public class CustomerController {
     public CustomerListDTO getListOfCustomers() {
         List<CustomerDTO> customerDTOs = this.customerService.getAllCustomers()
                 .stream()
-                .map(c -> {
-                    CustomerDTO dto =
-                            CustomerMapper.INSTANCE.customerToCustomerDto(c);
-                    dto.setCustomerUrl("/api/v1/customers/" + c.getId());
-                    return dto;
-                })
+                .map(ICustomerMapper.INSTANCE::customerToCustomerDto)
                 .collect(Collectors.toList());
         return CustomerListDTO.builder().customers(customerDTOs).build();
     }
@@ -44,12 +39,7 @@ public class CustomerController {
     @GetMapping("/{id}")
     public CustomerDTO getCustomerById(@PathVariable Long id) {
         return this.customerService.getCustomerById(id)
-                .map(c -> {
-                    CustomerDTO dto =
-                            CustomerMapper.INSTANCE.customerToCustomerDto(c);
-                    dto.setCustomerUrl("/api/v1/custoemrs/" + c.getId());
-                    return dto;
-                })
+                .map(ICustomerMapper.INSTANCE::customerToCustomerDto)
                 .orElseThrow(RuntimeException::new);
     }
 
