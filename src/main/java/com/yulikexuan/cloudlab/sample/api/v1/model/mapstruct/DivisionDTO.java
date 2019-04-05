@@ -1,4 +1,4 @@
-//: com.yulikexuan.cloudlab.sample.api.v1.model.mapstruct.EmployeeDTO.java
+//: com.yulikexuan.cloudlab.sample.api.v1.model.mapstruct.DivisionDTO.java
 
 
 package com.yulikexuan.cloudlab.sample.api.v1.model.mapstruct;
@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder @AllArgsConstructor
-public class EmployeeDTO {
+public class DivisionDTO {
 
-    private long employeeId;
-    private String employeeName;
-    private DivisionDTO divisionDTO;
+    private long divisionId;
+    private String divisionName;
 
 }///:~

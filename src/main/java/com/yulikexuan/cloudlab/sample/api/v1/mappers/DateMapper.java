@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 @Component
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "default")
 public class DateMapper {
 
     static final ZoneOffset ZONE_OFFSET = ZoneOffset.from(OffsetDateTime.now());

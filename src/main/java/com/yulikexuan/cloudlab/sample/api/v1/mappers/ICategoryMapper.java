@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@Mapper(uses = DateMapper.class, componentModel = "spring")
+@Mapper(uses = DateMapper.class, componentModel = "default")
 public interface ICategoryMapper {
 
     ICategoryMapper INSTANCE = Mappers.getMapper(ICategoryMapper.class);

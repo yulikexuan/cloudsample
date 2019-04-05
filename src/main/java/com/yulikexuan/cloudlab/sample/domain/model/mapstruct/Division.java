@@ -1,4 +1,4 @@
-//: com.yulikexuan.cloudlab.sample.domain.model.mapstruct.Employee.java
+//: com.yulikexuan.cloudlab.sample.domain.model.mapstruct.Division.java
 
 
 package com.yulikexuan.cloudlab.sample.domain.model.mapstruct;
@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder @AllArgsConstructor
-public class Employee {
+public class Division {
 
     private long id;
     private String name;
-    private Division division;
 
 }///:~
