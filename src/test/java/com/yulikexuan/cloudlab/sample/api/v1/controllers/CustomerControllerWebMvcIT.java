@@ -5,8 +5,6 @@ package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerListToCustomerListDtoMapper;
-import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
@@ -45,12 +43,6 @@ class CustomerControllerWebMvcIT {
 
     @MockBean
     private ICustomerService customerService;
-
-    @MockBean
-    private ICustomerMapper customerMapper;
-
-    @MockBean
-    private ICustomerListToCustomerListDtoMapper customerListMapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -106,8 +98,6 @@ class CustomerControllerWebMvcIT {
                         .lastname(lastname1).build(),
                 Customer.builder().id(id2).firstname(firstname2)
                         .lastname(lastname2).build());
-
-
 
         given(this.customerService.getAllCustomers())
                 .willReturn(customers);

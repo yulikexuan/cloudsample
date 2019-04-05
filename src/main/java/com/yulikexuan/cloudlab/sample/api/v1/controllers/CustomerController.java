@@ -4,44 +4,45 @@
 package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
+import com.yulikexuan.cloudlab.sample.api.v1.ApiPaths;
 import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerListToCustomerListDtoMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
+import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
-@RequestMapping("/api/v1/customers")
+@RequestMapping(ApiPaths.API_PATH_CUSTOMERS)
 public class CustomerController {
 
-    private final ICustomerMapper customerMapper;
-    private final ICustomerListToCustomerListDtoMapper customerListMapper;
     private final ICustomerService customerService;
 
-    public CustomerController(ICustomerMapper customerMapper,
-                              ICustomerListToCustomerListDtoMapper customerListMapper,
-                              ICustomerService customerService) {
-
-        this.customerMapper = customerMapper;
-        this.customerListMapper = customerListMapper;
+    public CustomerController(ICustomerService customerService) {
         this.customerService = customerService;
     }
 
     @GetMapping
     public CustomerListDTO getListOfCustomers() {
-        return customerListMapper.customerListToCustomerListDto(
-                this.customerService.getAllCustomers());
+
+        ICustomerListToCustomerListDtoMapper listMapper =
+                Mappers.getMapper(ICustomerListToCustomerListDtoMapper.class);
+        List<Customer> customers = this.customerService.getAllCustomers();
+        return listMapper.customerListToCustomerListDto(customers);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(ApiPaths.API_PATH_VARIABLE_ID)
     public CustomerDTO getCustomerById(@PathVariable Long id) {
         return this.customerService.getCustomerById(id)
-                .map(customerMapper::customerToCustomerDto)
+                .map(ICustomerMapper.INSTANCE::customerToCustomerDto)
                 .orElseThrow(RuntimeException::new);
     }
 

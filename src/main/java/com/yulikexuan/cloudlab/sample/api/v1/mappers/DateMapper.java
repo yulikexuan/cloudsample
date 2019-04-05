@@ -4,6 +4,9 @@
 package com.yulikexuan.cloudlab.sample.api.v1.mappers;
 
 
+import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -11,6 +14,8 @@ import java.time.ZoneOffset;
 import java.util.Optional;
 
 
+@Component
+@Mapper(componentModel = "spring")
 public class DateMapper {
 
     static final ZoneOffset ZONE_OFFSET = ZoneOffset.from(OffsetDateTime.now());

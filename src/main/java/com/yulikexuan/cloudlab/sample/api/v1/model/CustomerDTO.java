@@ -9,6 +9,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @Builder @AllArgsConstructor
 public class CustomerDTO {
