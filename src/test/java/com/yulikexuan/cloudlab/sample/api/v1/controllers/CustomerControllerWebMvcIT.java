@@ -4,7 +4,6 @@
 package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.ApiPaths;
 import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
@@ -31,8 +30,7 @@ import java.util.function.Function;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.reset;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -155,7 +153,7 @@ class CustomerControllerWebMvcIT {
         CustomerDTO expectedSavedCustomerDTO = mapper.customerToCustomerDto(
                 expectedSavedCustomer);
 
-        given(this.customerService.createCustomer(customer))
+        given(this.customerService.saveCustomer(customer))
                 .willReturn(expectedSavedCustomer);
 
         String expectedUrl = expectedSavedCustomerDTO.getCustomerUrl();
@@ -174,7 +172,57 @@ class CustomerControllerWebMvcIT {
 
         // Then
         System.out.println(mvcResult.getResponse().getContentAsString());
+    }
 
+    @DisplayName("Able to update a Customer - ")
+    @Test
+    void testUpdateCustomer() throws Exception {
+
+        // Given
+        long id = 7L;
+        String firstname = "James";
+        String lastname = "Bond";
+
+        ICustomerMapper mapper = ICustomerMapper.INSTANCE;
+
+        CustomerDTO customerDTO = CustomerDTO.builder()
+                .firstname(firstname)
+                .lastname(lastname)
+                .build();
+
+        String json = new ObjectMapper().writeValueAsString(customerDTO);
+
+        Customer customer = mapper.customerDtoToCustomer(customerDTO);
+        customer.setId(id);
+
+        Customer expectedUpdatedCustomer = Customer.builder()
+                .id(id)
+                .firstname(firstname)
+                .lastname(lastname)
+                .build();
+
+        CustomerDTO expectedUpdatedCustomerDTO = mapper.customerToCustomerDto(
+                expectedUpdatedCustomer);
+
+        given(this.customerService.saveCustomer(customer))
+                .willReturn(expectedUpdatedCustomer);
+
+        String expectedUrl = expectedUpdatedCustomerDTO.getCustomerUrl();
+
+        // When
+        MvcResult mvcResult = this.mockMvc.perform(
+                put(ApiPaths.API_PATH_CUSTOMERS + "/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.firstname", is(firstname)))
+                .andExpect(jsonPath("$.lastname", is(lastname)))
+                .andExpect(jsonPath("$.customerUrl", is(expectedUrl)))
+                .andReturn();
+
+        // Then
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
 }///:~

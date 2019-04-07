@@ -56,9 +56,24 @@ public class CustomerController {
 
         Customer newCustomer = CUSTOMER_MAPPER_SUPPLIER.get()
                 .customerDtoToCustomer(newCustomerDTO);
-        Customer savedCustoemr = this.customerService.createCustomer(newCustomer);
+        Customer savedCustoemr = this.customerService.saveCustomer(newCustomer);
 
         return CUSTOMER_MAPPER_SUPPLIER.get().customerToCustomerDto(savedCustoemr);
+    }
+
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDTO updateCustomer(@PathVariable Long id,
+                                      @RequestBody CustomerDTO customerDTO) {
+
+        Customer customer = CUSTOMER_MAPPER_SUPPLIER.get()
+                .customerDtoToCustomer(customerDTO);
+        customer.setId(id);
+        Customer savedCustoemr = this.customerService.saveCustomer(customer);
+
+        return CUSTOMER_MAPPER_SUPPLIER.get().customerToCustomerDto(
+                savedCustoemr);
     }
 
 }///:~

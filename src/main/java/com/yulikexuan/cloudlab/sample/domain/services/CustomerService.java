@@ -34,7 +34,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
+    public Customer saveCustomer(Customer customer) {
         Customer savedCustomer = Optional.ofNullable(customer)
                 .map(this.customerRepository::save)
                 .orElseThrow(RuntimeException::new);
