@@ -4,7 +4,11 @@
 package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.ApiPaths;
+import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
+import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
@@ -28,6 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.reset;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -121,5 +126,55 @@ class CustomerControllerWebMvcIT {
 //                .isEqualTo(customers);
     }
 
+    @DisplayName("Able to create new Customer - ")
+    @Test
+    void testCreateNewCustomer() throws Exception {
+
+        // Given
+        long id = 7L;
+        String firstname = "James";
+        String lastname = "Bond";
+
+        ICustomerMapper mapper = ICustomerMapper.INSTANCE;
+
+        CustomerDTO customerDTO = CustomerDTO.builder()
+                .firstname(firstname)
+                .lastname(lastname)
+                .build();
+
+        String newJson = new ObjectMapper().writeValueAsString(customerDTO);
+
+        Customer customer = mapper.customerDtoToCustomer(customerDTO);
+
+        Customer expectedSavedCustomer = Customer.builder()
+                .id(id)
+                .firstname(firstname)
+                .lastname(lastname)
+                .build();
+
+        CustomerDTO expectedSavedCustomerDTO = mapper.customerToCustomerDto(
+                expectedSavedCustomer);
+
+        given(this.customerService.createCustomer(customer))
+                .willReturn(expectedSavedCustomer);
+
+        String expectedUrl = expectedSavedCustomerDTO.getCustomerUrl();
+
+        // When
+        MvcResult mvcResult = this.mockMvc.perform(
+                post(ApiPaths.API_PATH_CUSTOMERS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newJson))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.firstname", is(firstname)))
+                .andExpect(jsonPath("$.lastname", is(lastname)))
+                .andExpect(jsonPath("$.customerUrl", is(expectedUrl)))
+                .andReturn();
+
+        // Then
+        System.out.println(mvcResult.getResponse().getContentAsString());
+
+    }
 
 }///:~

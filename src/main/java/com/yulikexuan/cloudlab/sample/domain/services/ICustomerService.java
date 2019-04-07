@@ -16,4 +16,6 @@ public interface ICustomerService {
 
     Optional<Customer> getCustomerById(Long id);
 
+    Customer createCustomer(Customer customer);
+
 }///:~

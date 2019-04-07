@@ -26,12 +26,19 @@ public class CustomerService implements ICustomerService {
     @Override
     public List<Customer> getAllCustomers() {
         return this.customerRepository.findAll();
-
     }
 
     @Override
     public Optional<Customer> getCustomerById(Long id) {
         return this.customerRepository.findById(id);
+    }
+
+    @Override
+    public Customer createCustomer(Customer customer) {
+        Customer savedCustomer = Optional.ofNullable(customer)
+                .map(this.customerRepository::save)
+                .orElseThrow(RuntimeException::new);
+        return savedCustomer;
     }
 
 }///:~
