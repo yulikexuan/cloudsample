@@ -5,7 +5,6 @@ package com.yulikexuan.cloudlab.sample.api.v1.controllers;
 
 
 import com.yulikexuan.cloudlab.sample.api.v1.ApiPaths;
-import com.yulikexuan.cloudlab.sample.api.v1.mappers.ICustomerMapper;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import org.junit.jupiter.api.DisplayName;
