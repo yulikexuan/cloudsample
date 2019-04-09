@@ -41,4 +41,26 @@ public class CustomerService implements ICustomerService {
         return savedCustomer;
     }
 
+    @Override
+    public Customer patchCustomer(Customer customer) {
+
+        return Optional.ofNullable(customer)
+                .map(c -> this.customerRepository.findById(c.getId()))
+                .map(copt -> copt.orElseThrow(RuntimeException::new))
+                .map(c -> {
+                    if (customer.getFirstname() != null) {
+                        c.setFirstname(customer.getFirstname());
+                    }
+                    if (customer.getLastname() != null) {
+                        c.setLastname(customer.getLastname());
+                    }
+                    return this.customerRepository.save(c);
+                }).orElse(null);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        this.customerRepository.deleteById(id);
+    }
+
 }///:~

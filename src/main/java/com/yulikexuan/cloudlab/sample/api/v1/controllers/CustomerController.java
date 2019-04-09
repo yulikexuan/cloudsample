@@ -76,4 +76,24 @@ public class CustomerController {
                 savedCustoemr);
     }
 
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public CustomerDTO patchCustomer(@PathVariable Long id,
+                                     @RequestBody CustomerDTO customerDTO) {
+
+        Customer customer = CUSTOMER_MAPPER_SUPPLIER.get()
+                .customerDtoToCustomer(customerDTO);
+        customer.setId(id);
+        Customer patchedCustoemr = this.customerService.patchCustomer(customer);
+
+        return CUSTOMER_MAPPER_SUPPLIER.get().customerToCustomerDto(
+                patchedCustoemr);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteCustomerById(@PathVariable Long id) {
+        this.customerService.deleteCustomer(id);
+    }
+
 }///:~
