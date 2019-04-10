@@ -11,6 +11,7 @@ import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
+import com.yulikexuan.cloudlab.sample.domain.services.exceptions.NotFoundException;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class CustomerController {
     public CustomerDTO getCustomerById(@PathVariable Long id) {
         return this.customerService.getCustomerById(id)
                 .map(CUSTOMER_MAPPER_SUPPLIER.get()::customerToCustomerDto)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(NotFoundException::new);
     }
 
     @PostMapping()

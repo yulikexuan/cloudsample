@@ -6,6 +6,7 @@ package com.yulikexuan.cloudlab.sample.domain.services;
 
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.repositories.ICustomerRepository;
+import com.yulikexuan.cloudlab.sample.domain.services.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class CustomerService implements ICustomerService {
 
         return Optional.ofNullable(customer)
                 .map(c -> this.customerRepository.findById(c.getId()))
-                .map(copt -> copt.orElseThrow(RuntimeException::new))
+                .map(copt -> copt.orElseThrow(NotFoundException::new))
                 .map(c -> {
                     if (customer.getFirstname() != null) {
                         c.setFirstname(customer.getFirstname());
@@ -55,7 +56,7 @@ public class CustomerService implements ICustomerService {
                         c.setLastname(customer.getLastname());
                     }
                     return this.customerRepository.save(c);
-                }).orElse(null);
+                }).orElseThrow(RuntimeException::new);
     }
 
     @Override
