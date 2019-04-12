@@ -11,6 +11,8 @@ import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerDTO;
 import com.yulikexuan.cloudlab.sample.api.v1.model.CustomerListDTO;
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 
+@Api("Cloud Sample - Customer Controller")
 @RestController
 @RequestMapping(ApiPaths.API_PATH_CUSTOMERS)
 public class CustomerController {
@@ -34,6 +37,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @ApiOperation(value = "This will get a list of customers.", notes = "Using DTO of customer.")
     @GetMapping
     public CustomerListDTO getListOfCustomers() {
 
