@@ -29,9 +29,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Mockito.reset;
     import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
     import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -69,7 +71,7 @@ class CategoryControllerTest {
     void setUp() {
 
         this.id = 7L;
-        this.name = "Steves Jobs";
+        this.name = "Steve Jobs";
 
         this.category = Category.builder()
                 .id(this.id)
@@ -87,38 +89,68 @@ class CategoryControllerTest {
         reset(this.categoryService);
     }
 
-    @DisplayName("Able to find a Category by it's name - ")
-    @Test
-    void getCategoryByName() throws Exception {
+    @Nested
+    @DisplayName("Test getting category by category name - ")
+    class GettingCategoryByNameTest {
 
-        // Given
-        DateTimeFormatter dateTimeFormatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+        @DisplayName("Able to find a Category by it's name - ")
+        @Test
+        void getCategoryByName() throws Exception {
 
-        Optional<Category> categoryOpt = Optional.of(this.category);
-        given(this.categoryService.getCategoryByName(this.name))
-                .willReturn(categoryOpt);
+            // Given
+            DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
 
-        DateMapper dateMapper = new DateMapper();
-        OffsetDateTime createdDateDTO = dateMapper.timestampToOffsetDateTime(
-                this.category.getCreatedDate());
+            Optional<Category> categoryOpt = Optional.of(category);
+            given(categoryService.getCategoryByName(name))
+                    .willReturn(categoryOpt);
 
-        // When
-        MvcResult mvcResult = this.mockMvc.perform(
-                        get("/api/v1/categories/" + this.name)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id", is((int)this.id)))
-                .andExpect(jsonPath("$.createDate",
-                        is(dateTimeFormatter.format(createdDateDTO))))
-                .andReturn();
+            DateMapper dateMapper = new DateMapper();
+            OffsetDateTime createdDateDTO = dateMapper.timestampToOffsetDateTime(
+                    category.getCreatedDate());
 
-        // Then
-        System.out.printf("%n>>>>>>> The response is: %n    '%s'%n",
-                mvcResult.getResponse().getContentAsString());
+            // When
+            MvcResult mvcResult = mockMvc.perform(
+                    get("/api/v1/categories/" + name)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                    .andExpect(jsonPath("$.id", is((int)id)))
+                    .andExpect(jsonPath("$.createDate",
+                            is(dateTimeFormatter.format(createdDateDTO))))
+                    .andReturn();
+
+            // Then
+            System.out.printf("%n>>>>>>> The response is: %n    '%s'%n",
+                    mvcResult.getResponse().getContentAsString());
+        }
+
+        @DisplayName("Category may not found - ")
+        @Test
+        void testCategoryByNameNotFound() throws Exception {
+
+            // Given
+            willThrow(new NotFoundException(name)).given(categoryService)
+                    .getCategoryByName(name);
+
+            // When
+            MvcResult mvcResult = mockMvc.perform(
+                    get("/api/v1/categories/" + name)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andReturn();
+
+            String resolvedExceptionMsg = mvcResult.getResolvedException()
+                    .toString();
+
+            // Then
+            assertThat(resolvedExceptionMsg)
+                    .as("Exception message should contain '%s'", name)
+                    .contains(NotFoundException.class.getSimpleName())
+                    .endsWith(name);
+        }
+
     }
-
 
     @DisplayName("Multi-Category Test - ")
     @Nested

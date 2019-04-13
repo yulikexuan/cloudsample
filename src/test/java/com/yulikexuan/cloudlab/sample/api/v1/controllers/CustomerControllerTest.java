@@ -29,6 +29,8 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -235,6 +237,75 @@ class CustomerControllerTest {
 
         // Then
         System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @DisplayName("Able to patch a customer - ")
+    @Test
+    void testPatchCustomer() throws Exception {
+
+        // Given
+        long id = 7L;
+        String firstname = "James";
+        String lastname = "Bond";
+
+        ICustomerMapper mapper = ICustomerMapper.INSTANCE;
+
+        CustomerDTO customerDTO = CustomerDTO.builder()
+                .firstname(firstname)
+                .build();
+
+        String json = new ObjectMapper().writeValueAsString(customerDTO);
+
+        Customer customer = mapper.customerDtoToCustomer(customerDTO);
+        customer.setId(id);
+
+        Customer expectedPatchedCustomer = Customer.builder()
+                .id(id)
+                .firstname(firstname)
+                .lastname(lastname)
+                .build();
+
+        CustomerDTO expectedPatchedCustomerDTO = mapper.customerToCustomerDto(
+                expectedPatchedCustomer);
+
+        given(this.customerService.patchCustomer(customer))
+                .willReturn(expectedPatchedCustomer);
+
+        String expectedUrl = expectedPatchedCustomerDTO.getCustomerUrl();
+
+        // When
+        MvcResult mvcResult = this.mockMvc.perform(
+                patch(ApiPaths.API_PATH_CUSTOMERS + "/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.firstname", is(firstname)))
+                .andExpect(jsonPath("$.lastname", is(lastname)))
+                .andExpect(jsonPath("$.customerUrl", is(expectedUrl)))
+                .andReturn();
+
+        // Then
+        System.out.println(mvcResult.getResponse().getContentAsString());
+    }
+
+    @DisplayName("Able to delete a customer - ")
+    @Test
+    void testDeleteCustomer() throws Exception {
+
+        // Given
+        long id = 7L;
+
+        // When
+        MvcResult mvcResult = this.mockMvc.perform(
+                        delete(ApiPaths.API_PATH_CUSTOMERS + "/" + id))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        // Then
+        then(this.customerService).should(times(1))
+                .deleteCustomer(id);
+        System.out.println(mvcResult.getResponse());
     }
 
 }///:~

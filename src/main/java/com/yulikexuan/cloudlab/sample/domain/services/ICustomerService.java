@@ -18,4 +18,8 @@ public interface ICustomerService {
 
     Customer saveCustomer(Customer customer);
 
+    Customer patchCustomer(Customer customer);
+
+    void deleteCustomer(Long id);
+
 }///:~

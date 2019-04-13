@@ -37,9 +37,11 @@ public class CategoryController {
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryDTO getCategory(@PathVariable String name) {
-        return this.categoryService.getCategoryByName(name)
-                .map(ICategoryMapper.INSTANCE::categoryToCategoryDTO)
-                .get();
+
+        Category category = this.categoryService.getCategoryByName(name)
+                .orElseThrow(() -> new NotFoundException(name));
+
+        return ICategoryMapper.INSTANCE.categoryToCategoryDTO(category);
     }
 
 }///:~

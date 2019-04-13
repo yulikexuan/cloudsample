@@ -57,7 +57,7 @@ class CategoryServiceTest {
                 .containsExactly(expectedAllCategories.toArray(categoryArr));
     }
 
-    @DisplayName("Able to get a Category by it's name - ")
+    @DisplayName("Able to get a Category by it's testPatchCustomer - ")
     @Test
     void getCategoryByName() {
 

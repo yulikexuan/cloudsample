@@ -6,6 +6,7 @@ package com.yulikexuan.cloudlab.sample.domain.services;
 
 import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.repositories.ICustomerRepository;
+import com.yulikexuan.cloudlab.sample.api.v1.controllers.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,29 @@ public class CustomerService implements ICustomerService {
                 .map(this.customerRepository::save)
                 .orElseThrow(RuntimeException::new);
         return savedCustomer;
+    }
+
+    @Override
+    public Customer patchCustomer(Customer customer) {
+
+        return Optional.ofNullable(customer)
+                .map(c -> this.customerRepository.findById(c.getId()))
+                .map(copt -> copt.orElseThrow(() -> new NotFoundException(
+                        customer.getId().toString())))
+                .map(c -> {
+                    if (customer.getFirstname() != null) {
+                        c.setFirstname(customer.getFirstname());
+                    }
+                    if (customer.getLastname() != null) {
+                        c.setLastname(customer.getLastname());
+                    }
+                    return this.customerRepository.save(c);
+                }).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        this.customerRepository.deleteById(id);
     }
 
 }///:~
