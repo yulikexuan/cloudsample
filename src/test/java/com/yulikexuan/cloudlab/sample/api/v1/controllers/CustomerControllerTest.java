@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -176,8 +177,14 @@ class CustomerControllerTest {
                 .andExpect(jsonPath("$.customerUrl", is(expectedUrl)))
                 .andReturn();
 
+        String uri = mvcResult.getResponse().getHeader("location");
+
         // Then
         System.out.println(mvcResult.getResponse().getContentAsString());
+        assertThat(uri)
+                .as("The uri of the saved customer should end with '%s'",
+                        expectedUrl)
+                .endsWith(expectedUrl);
     }
 
     @DisplayName("Able to update a customer - ")

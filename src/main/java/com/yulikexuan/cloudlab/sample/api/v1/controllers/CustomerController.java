@@ -14,8 +14,12 @@ import com.yulikexuan.cloudlab.sample.domain.services.ICustomerService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -52,13 +56,20 @@ public class CustomerController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public CustomerDTO createCustomer(@RequestBody CustomerDTO newCustomerDTO) {
+    public ResponseEntity<CustomerDTO> createCustomer(
+            @Valid @RequestBody CustomerDTO newCustomerDTO) {
 
         Customer newCustomer = CUSTOMER_MAPPER_SUPPLIER.get()
                 .customerDtoToCustomer(newCustomerDTO);
         Customer savedCustoemr = this.customerService.saveCustomer(newCustomer);
 
-        return CUSTOMER_MAPPER_SUPPLIER.get().customerToCustomerDto(savedCustoemr);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedCustoemr.getId())
+                .toUri();
+        CustomerDTO dto = CUSTOMER_MAPPER_SUPPLIER.get()
+                .customerToCustomerDto(savedCustoemr);
+        return ResponseEntity.created(location).body(dto);
     }
 
 
