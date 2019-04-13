@@ -9,6 +9,7 @@ import com.yulikexuan.cloudlab.sample.domain.model.Customer;
 import com.yulikexuan.cloudlab.sample.domain.repositories.ICategoryRepository;
 import com.yulikexuan.cloudlab.sample.domain.repositories.ICustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,18 +87,21 @@ class CustomerServiceIT {
         );
     }
 
+    @Disabled
     @DisplayName("Able to delete a existing customer - ")
     @Test
     void testDeleteCustomer() {
 
         // Given
-        Long id = 3L;
+        Long id = 1L;
+        Optional<Customer> customerOpt = this.customerRepository.findById(1L);
 
         // When
         this.customerService.deleteCustomer(id);
         Optional<Customer> deletedCustomerOpt = this.customerService.getCustomerById(id);
 
         // Then
+        assertThat(customerOpt.isPresent()).isEqualTo(true);
         assertThat(deletedCustomerOpt.isPresent())
                 .as("The customer with id %d has been deleted.", id)
                 .isEqualTo(false);
