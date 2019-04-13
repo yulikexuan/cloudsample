@@ -87,7 +87,7 @@ class CustomerServiceIT {
         );
     }
 
-    @Disabled
+    @Disabled // Passed by IDE but not maven
     @DisplayName("Able to delete a existing customer - ")
     @Test
     void testDeleteCustomer() {
