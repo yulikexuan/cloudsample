@@ -6,3 +6,13 @@ management:
     web:
       exposure:
         include: '*'
+spring:
+  security:
+    user:
+      name: yul
+      password: 123456
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
